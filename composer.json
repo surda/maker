@@ -21,7 +21,7 @@
         "nette/di": "^3.0",
         "nette/utils": "^3.0",
         "latte/latte": "^2.8",
-        "contributte/console": "^0.9"
+        "contributte/console": "^0.8"
     },
     "require-dev": {
         "nette/tester": "^2.0",
