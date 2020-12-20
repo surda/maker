@@ -1,0 +1,25 @@
+<?php declare(strict_types=1);
+
+namespace {$namespace};
+
+use {$doctrine_repository_full_class_name};
+
+class {$class_name} extends {$doctrine_repository_class_name}
+{
+    /**
+     * @param int $id
+     * @return {$entity_class_name}
+     * @throws {$entity_class_name}NotFoundException
+     */
+    public function get{$entity_class_name}(int $id): {$entity_class_name}
+    {
+        /** @var {$entity_class_name}|null $entity */
+        $entity = $this->find($id);
+
+        if ($entity === NULL) {
+            throw new {$entity_class_name}NotFoundException(sprintf("{$entity_class_name} ID '%s' not found.", $id));
+        }
+
+        return $entity;
+    }
+}

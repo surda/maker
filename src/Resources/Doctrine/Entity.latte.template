@@ -1,0 +1,29 @@
+<?php declare(strict_types=1);
+
+namespace {$namespace};
+
+use {$repository_full_class_name};
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass={$repository_class_name}::class)
+{if $should_escape_table_name} * @ORM\Table(
+ *      name="`{$table_name}`",
+ *      options={"collate"="utf8mb4_czech_ci", "charset"="utf8mb4"}
+ * )
+{/if}
+ */
+class {$class_name}
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+}

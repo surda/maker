@@ -1,0 +1,14 @@
+<?php declare(strict_types=1);
+
+namespace {$namespace};
+
+class {$class_name}
+{
+    /**
+     * @return {$entity_class_name}
+     */
+    public function create(): {$entity_class_name}
+    {
+        return new {$entity_class_name}();
+    }
+}

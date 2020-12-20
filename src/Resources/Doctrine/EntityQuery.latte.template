@@ -1,0 +1,48 @@
+<?php declare(strict_types=1);
+
+namespace {$namespace};
+
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+
+final class {$class_name}
+{
+    /** @var EntityManagerInterface */
+    private $em;
+
+    /**
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @param int $id
+     * @return {$entity_class_name}
+     * @throws {$entity_class_name}NotFoundException
+     */
+    public function get(int $id): {$entity_class_name}
+    {
+        /** @var {$entity_class_name}|null $entity */
+        try {
+            $entity = $this->em->createQueryBuilder()
+                ->select('e')
+                ->from({$entity_class_name}::class, 'e')
+                ->where('e.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getOneOrNullResult();
+        }
+        catch (NonUniqueResultException $e) {
+            throw new {$entity_class_name}NotFoundException(sprintf("{$entity_class_name} with ID '%s' not found.", $id));
+        }
+
+        if ($entity === NULL) {
+            throw new {$entity_class_name}NotFoundException(sprintf("{$entity_class_name} with ID '%s' not found.", $id));
+        }
+
+        return $entity;
+    }
+}

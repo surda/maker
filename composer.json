@@ -1,0 +1,60 @@
+{
+    "name": "surda/maker",
+    "description": "Nette Maker helps you create empty files.",
+    "keywords": ["nette", "generator", "code generator"],
+    "type": "library",
+    "homepage": "http://surani.cz",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Radek Šuráni",
+            "homepage": "http://surani.cz",
+            "email": "radek@surani.cz"
+        }
+    ],
+    "support": {
+        "email": "radek@surani.cz",
+        "issues": "https://github.com/surda/maker/issues"
+    },
+    "require": {
+        "php": ">=7.2|^8.0",
+        "nette/di": "^3.0",
+        "nette/utils": "^3.0",
+        "latte/latte": "^2.8",
+        "contributte/console": "^0.9"
+    },
+    "require-dev": {
+        "nette/tester": "^2.0",
+        "ninjify/nunjuck": "0.3",
+        "phpstan/phpstan": "^0.12.0",
+        "phpstan/phpstan-strict-rules": "^0.12.0",
+        "phpstan/phpstan-nette": "^0.12.0",
+        "phpstan/phpstan-deprecation-rules": "^0.12.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Surda\\Maker\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Surda\\Maker\\": "tests/cases"
+        }
+    },
+    "scripts": {
+        "tests": [
+            "vendor/bin/tester -s -p php -C tests/cases"
+        ],
+        "coverage": [
+            "vendor/bin/tester tests -s -p phpdbg --coverage ./tests/tmp/coverage.html --coverage-src ./src"
+        ],
+        "phpstan": [
+            "vendor/bin/phpstan analyse -l max -c phpstan.neon src"
+        ],
+        "da": [
+            "composer dump-autoload -o"
+        ]
+    }
+}
