@@ -19,9 +19,9 @@
     "require": {
         "php": ">=7.2|^8.0",
         "nette/di": "^3.0",
-        "nette/utils": "^3.0",
-        "latte/latte": "^2.8",
-        "contributte/console": "^0.8"
+        "nette/utils": "^3.2",
+        "latte/latte": "^2.10",
+        "contributte/console": "^0.9"
     },
     "require-dev": {
         "nette/tester": "^2.0",
@@ -51,7 +51,7 @@
             "vendor/bin/tester tests -s -p phpdbg --coverage ./tests/tmp/coverage.html --coverage-src ./src"
         ],
         "phpstan": [
-            "vendor/bin/phpstan analyse -l max -c phpstan.neon src"
+            "vendor/bin/phpstan analyse -l 5 -c phpstan.neon src"
         ],
         "da": [
             "composer dump-autoload -o"
