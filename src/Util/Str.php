@@ -83,9 +83,8 @@ class Str
      */
     public static function normalizeClassName(string $value): string
     {
-        return implode('\\', array_map(function ($item) {
+        return implode('\\', array_map(function ($item):string {
             return ucwords($item);
-//            return Strings::firstUpper($item);
         }, explode('\\', $value)));
     }
 
