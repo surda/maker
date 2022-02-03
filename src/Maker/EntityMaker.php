@@ -40,16 +40,18 @@ class EntityMaker extends AbstractMaker
         $entityClassDetails = $this->generator->createClassNameDetails($name, 'Model');
         $entityFactoryClassDetails = $this->generator->createClassNameDetails($name, 'Model', 'Factory');
         $exceptionClassDetails = $this->generator->createClassNameDetails($name, 'Model', 'NotFoundException');
-        $repoClassDetails = $this->generator->createClassNameDetails($name, 'Model', 'Repository');
+        $repositoryClassDetails = $this->generator->createClassNameDetails($name, 'Model', 'Repository');
         $entityQueryClassDetails = $this->generator->createClassNameDetails($name, 'Model', 'Query');
         $entityDataClassDetails = $this->generator->createClassNameDetails($name, 'Model', 'Data');
+        $neonConfigDetails = $this->generator->createClassNameDetails($name, 'Model', '___Neon');
 
-        $this->generateEntityClass($entityClassDetails, $repoClassDetails);
+        $this->generateEntityClass($entityClassDetails, $repositoryClassDetails);
         $this->generateEntityFactoryClass($entityFactoryClassDetails, $entityClassDetails);
         $this->generateExceptionClass($exceptionClassDetails);
-        $this->generateRepositoryClass($repoClassDetails, $entityClassDetails);
+        $this->generateRepositoryClass($repositoryClassDetails, $entityClassDetails);
         $this->generateEntityQueryClass($entityQueryClassDetails, $entityClassDetails);
         $this->generateEntityDataClass($entityDataClassDetails, $entityClassDetails);
+        $this->generateNeonConfig($neonConfigDetails, $entityClassDetails, $repositoryClassDetails);
     }
 
     protected function generateEntityClass(ClassNameDetails $entityClassDetails, ClassNameDetails $repoClassDetails): string
@@ -86,6 +88,29 @@ class EntityMaker extends AbstractMaker
                 'entity_class_name' => $entityClassDetails->getShortName(),
                 'doctrine_repository_full_class_name' => 'Doctrine\ORM\EntityRepository',
                 'doctrine_repository_class_name' => 'EntityRepository',
+            ]
+        );
+
+        $entityPath = $this->fileManager->writeContent($fullClassName, $content);
+
+        $this->writeCommentMessage($this->io, $this->fileManager->relativizePath($this->fileManager->getRelativePathForFutureClass($fullClassName)));
+
+        return $entityPath;
+    }
+
+    protected function generateNeonConfig(ClassNameDetails $neonConfigDetail, ClassNameDetails $entityClassDetails, ClassNameDetails $repositoryClassDetails): string
+    {
+        $fullClassName = $neonConfigDetail->getFullName();
+
+        $content = $this->generator->generateClassContent(
+            $fullClassName,
+            'Doctrine/NeonConfig.latte.template',
+            [
+                'repository_full_class_name' => $repositoryClassDetails->getFullName(),
+                'repository_class_name' => $repositoryClassDetails->getShortName(),
+                'entity_full_class_name' => $entityClassDetails->getFullName(),
+                'entity_class_name' => $entityClassDetails->getShortName(),
+                'entity_dir_name' => dirname($this->fileManager->relativizePath($this->fileManager->getRelativePathForFutureClass($fullClassName))),
             ]
         );
 
