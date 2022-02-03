@@ -24,4 +24,5 @@ extensions:
 
 ```bash
 ./bin/console.sh make:entity
+./bin/console.sh make:entity Foo\\Bar\BarEntity
 ```
