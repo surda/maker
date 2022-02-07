@@ -1,0 +1,8 @@
+	# {$repository_class_name}
+	-
+		class: {$repository_full_class_name}
+		factory: @App\Model\Database\EntityManager::getRepository('{$entity_full_class_name}')
+
+	    # Entity ORM annotations mapping
+        {$entity_full_class_name}: %appDir%/{$entity_dir_name}
+
