@@ -2,10 +2,20 @@
 
 namespace {$namespace};
 
+use Doctrine\ORM\EntityManagerInterface;
+
 class {$class_name}
 {
+    public function __construct(private EntityManagerInterface $em)
+    {
+    }
+
     public function create(): {$entity_class_name}
     {
-        return new {$entity_class_name}();
+        $entity = new {$entity_class_name}();
+
+        $this->em->persist($entity);
+
+        return $entity;
     }
 }
