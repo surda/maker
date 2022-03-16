@@ -6,6 +6,7 @@ use App\Model\Database\Entity\Attributes\TId;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @noRector \Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector
  * @ORM\Entity(repositoryClass={$repository_full_class_name}::class)
 {if $should_escape_table_name} * @ORM\Table(
  *      name="`{$table_name}`",
