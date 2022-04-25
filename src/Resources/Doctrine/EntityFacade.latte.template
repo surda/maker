@@ -1,0 +1,12 @@
+<?php declare(strict_types=1);
+
+namespace {$namespace};
+
+use Doctrine\ORM\EntityManagerInterface;
+
+class {$class_name}
+{
+    public function __construct(private {$repository_class_name} {$repository_class_property_name}, private EntityManagerInterface $em)
+    {
+    }
+}

@@ -2,6 +2,8 @@
 
 namespace Surda\Maker\Util;
 
+use Nette\Utils\Strings;
+
 class ClassNameDetails
 {
     /** @var string */
@@ -39,6 +41,14 @@ class ClassNameDetails
     public function getShortName(): string
     {
         return Str::getShortClassName($this->fullClassName);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPropertyName(): string
+    {
+        return sprintf('$%s', Strings::firstLower(Str::getShortClassName($this->fullClassName)));
     }
 
     /**

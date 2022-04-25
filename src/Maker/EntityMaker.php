@@ -39,6 +39,7 @@ class EntityMaker extends AbstractMaker
 
         $entityClassDetails = $this->generator->createClassNameDetails($name, 'Model');
         $entityFactoryClassDetails = $this->generator->createClassNameDetails($name, 'Model', 'Factory');
+        $facadeClassDetails = $this->generator->createClassNameDetails($name, 'Model', 'Facade');
         $exceptionClassDetails = $this->generator->createClassNameDetails($name, 'Model', 'NotFoundException');
         $repositoryClassDetails = $this->generator->createClassNameDetails($name, 'Model', 'Repository');
         $entityQueryClassDetails = $this->generator->createClassNameDetails($name, 'Model', 'Query');
@@ -47,6 +48,7 @@ class EntityMaker extends AbstractMaker
 
         $this->generateEntityClass($entityClassDetails, $repositoryClassDetails);
         $this->generateEntityFactoryClass($entityFactoryClassDetails, $entityClassDetails);
+        $this->generateEntityFacadeClass($facadeClassDetails, $entityClassDetails, $repositoryClassDetails);
         $this->generateExceptionClass($exceptionClassDetails);
         $this->generateRepositoryClass($repositoryClassDetails, $entityClassDetails);
         $this->generateEntityQueryClass($entityQueryClassDetails, $entityClassDetails);
@@ -168,6 +170,28 @@ class EntityMaker extends AbstractMaker
             $fullClassName,
             'Doctrine/EntityFactory.latte.template',
             [
+                'entity_class_name' => $entityClassDetails->getShortName(),
+            ]
+        );
+
+        $entityPath = $this->fileManager->writeContent($fullClassName, $content);
+
+        $this->writeCommentMessage($this->io, $this->fileManager->relativizePath($this->fileManager->getRelativePathForFutureClass($fullClassName)));
+
+        return $entityPath;
+    }
+
+    protected function generateEntityFacadeClass(ClassNameDetails $entityFacadeClassDetails, ClassNameDetails $entityClassDetails, ClassNameDetails $repositoryClassDetails): string
+    {
+        $fullClassName = $entityFacadeClassDetails->getFullName();
+
+        $content = $this->generator->generateClassContent(
+            $fullClassName,
+            'Doctrine/EntityFacade.latte.template',
+            [
+                'repository_full_class_name' => $repositoryClassDetails->getFullName(),
+                'repository_class_name' => $repositoryClassDetails->getShortName(),
+                'repository_class_property_name' => $repositoryClassDetails->getPropertyName(),
                 'entity_class_name' => $entityClassDetails->getShortName(),
             ]
         );

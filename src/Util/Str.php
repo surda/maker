@@ -2,8 +2,6 @@
 
 namespace Surda\Maker\Util;
 
-use Nette\Utils\Strings;
-
 class Str
 {
     /**
@@ -61,7 +59,6 @@ class Str
         $value = str_replace(['-', '_', '.', ':'], ' ', $value);
         $value = ucwords($value);
         $value = str_replace(' ', '', $value);
-//        $value = Strings::firstUpper($value);
         $value = ucwords($value);
         $value = self::addSuffix($value, $suffix);
 
