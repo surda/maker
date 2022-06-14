@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MakeEntityCommand extends Command
 {
-    /** @var string */
+    /** @var string|null */
     protected static $defaultName = 'make:entity';
 
     /** @var MakerInterface */
